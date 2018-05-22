@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {OrderListService} from "./order-list.service";
+import {OrderListService} from './order-list.service';
 
-export type statuses = 'CREATED' | 'STARTED' | 'DONE';
+export type Statuses = 'CREATED' | 'STARTED' | 'DONE';
 
 export interface Order {
   name: string;
@@ -18,7 +18,7 @@ export interface Order {
       </h1>
 
       <app-coffee-input (submit)="addOrder($event)"></app-coffee-input>
-      <app-orders-list [orders]="myOrders" (cancel)="removeOrder($event)"></app-orders-list>
+      <app-orders-list [orders]="myOrders" (remove)="removeOrder($event)" (update)="updateOrder($event)"></app-orders-list>
     </div>
   `,
   styleUrls: ['./app.component.css'],
@@ -39,7 +39,9 @@ export class AppComponent {
   removeOrder(o: Order) {
     console.log('removing order: ', JSON.stringify(o));
     this.myOrders = this.ordersListService.removeOrder(o);
+  }
 
-
+  updateOrder({order, changes}) {
+    this.myOrders = this.ordersListService.updateOrder(order, changes);
   }
 }

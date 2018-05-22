@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Order} from "./app.component";
+import {Order} from './app.component';
 
 const ordersKey = 'orders';
 
@@ -27,8 +27,13 @@ export class OrdersListStorageService {
     return this.update();
   }
 
+  put(order: Order, changes: Partial<Order>) {
+    Object.assign(this.orders.find(o => o === order), changes);
+    return this.update();
+  }
+
   private update() {
     localStorage.setItem(ordersKey, JSON.stringify(this.orders));
     return this.get();
   }
- }
+}

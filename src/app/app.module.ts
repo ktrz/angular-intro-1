@@ -7,13 +7,15 @@ import {FormsModule} from '@angular/forms';
 import { OrdersListComponent } from './orders-list/orders-list.component';
 import {OrderListService} from './order-list.service';
 import { OrderComponent } from './order/order.component';
+import { NextActionNamePipe } from './next-action-name.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CoffeeInputComponent,
     OrdersListComponent,
-    OrderComponent
+    OrderComponent,
+    NextActionNamePipe
   ],
   imports: [
     BrowserModule,
