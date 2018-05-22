@@ -1,10 +1,45 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {OrderListService} from "./order-list.service";
+
+export type statuses = 'CREATED' | 'STARTED' | 'DONE';
+
+export interface Order {
+  name: string;
+  coffee: string;
+  status: any;
+}
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+    <div class="cafe-app">
+      <h1>
+        Welcome to {{ title | uppercase}}!
+      </h1>
+
+      <app-coffee-input (submit)="addOrder($event)"></app-coffee-input>
+      <app-orders-list [orders]="myOrders" (cancel)="removeOrder($event)"></app-orders-list>
+    </div>
+  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Scalac\'s Cafe';
+
+  myOrders: Order[] = this.ordersListService.getOrders();
+
+  constructor(private ordersListService: OrderListService) {
+  }
+
+  addOrder({name, coffee}) {
+    console.log(`${coffee} ordered by ${name}`);
+    this.myOrders = this.ordersListService.addOrder({name, coffee, status: 'CREATED'});
+  }
+
+  removeOrder(o: Order) {
+    console.log('removing order: ', JSON.stringify(o));
+    this.myOrders = this.ordersListService.removeOrder(o);
+
+
+  }
 }
